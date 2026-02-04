@@ -115,11 +115,6 @@ The application will be available at `http://localhost:5000`
 - `DELETE /api/messes/expired` - Delete expired menus
 - `DELETE /api/messes/:id` - Delete specific menu
 
-## Real-time Events
-
-- `newMenuAdded` - Emitted when a new menu is uploaded
-- `menuDeleted` - Emitted when a menu is deleted
-- `menusExpired` - Emitted when expired menus are cleaned up
 
 ## File Structure
 
@@ -188,45 +183,3 @@ Messy/
    - Build Command: npm install  
    - Start Command: npm start  
 7. Click Deploy  
-8. Your app will be live at https://your-app-name.onrender.com  
-
-
-## Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `MONGODB_URI` | MongoDB connection string | Yes |
-| `PORT` | Server port (default: 5000) | No |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | Yes |
-| `CLOUDINARY_API_KEY` | Cloudinary API key | Yes |
-| `CLOUDINARY_API_SECRET` | Cloudinary API secret | Yes |
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-
-## Changelog
-
-### v1.0.0
-- Initial release with Cloudinary integration
-- Real-time menu sharing
-- Auto-expiration system
-- Search and filter functionality
-- Responsive design 
-=======
-# Mess-menu-app
->>>>>>> 06f8bca330db2731921b76429aee9f9d95205f25
