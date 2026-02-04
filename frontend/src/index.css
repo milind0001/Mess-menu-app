@@ -1,0 +1,769 @@
+/* =====================================
+   MESSMENU DESIGN SYSTEM v1 (PRO)
+===================================== */
+
+/* ---------- DESIGN TOKENS ---------- */
+:root {
+  /* Brand */
+  --primary: #8c88e1;
+  --primary-dark: #554eea;
+  --accent: #00d4ff;
+
+  /* Status */
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+
+  /* Backgrounds */
+  --bg-main: linear-gradient(135deg, #667eea, #764ba2);
+  --glass: rgba(255, 255, 255, 0.94);
+  --glass-soft: rgba(255, 255, 255, 0.75);
+
+  /* Text */
+  --text-main: #1f2937;
+  --text-muted: #020202;
+  --text-light: #000000;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+
+  /* Shadows */
+  --sh-sm: 0 4px 12px rgba(0,0,0,.08);
+  --sh-md: 0 10px 30px rgba(0,0,0,.14);
+  --sh-lg: 0 20px 50px rgba(0,0,0,.2);
+  --sh-glow: 0 0 25px rgba(108,99,255,.45);
+
+  /* Motion */
+  --ease: cubic-bezier(.4,0,.2,1);
+  --fast: .15s;
+  --base: .3s;
+}
+
+/* ---------- RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* ---------- LAYOUT ---------- */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* ========== APP SHELL (PHASE 2) ========== */
+.app-shell {
+  padding-top: 40px;
+  padding-bottom: 64px;
+}
+
+.section {
+  margin-bottom: 56px;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+/* ---------- HEADER / NAVBAR ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  transition: background var(--base), box-shadow var(--base);
+}
+
+.header.scrolled {
+  background: var(--glass);
+  box-shadow: var(--sh-md);
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 72px;
+}
+
+.header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+
+  /* Standard (future-proof) */
+  background-clip: text;
+  color: transparent;
+
+  /* WebKit (required today) */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- NAV ---------- */
+.nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all var(--base) var(--ease);
+}
+
+.nav-btn:hover {
+  background: rgba(0,0,0,.05);
+}
+
+.nav-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: var(--sh-glow);
+}
+
+/* ---------- GRID ---------- */
+.mess-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* =================================================
+   PHASE 3 — MESS CARD UPGRADE
+================================================= */
+
+.mess-card {
+  position: relative;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--sh-md);
+  transition: transform var(--base), box-shadow var(--base);
+  overflow: hidden;
+}
+
+.mess-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sh-lg);
+}
+
+/* Gradient glow border */
+.mess-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgba(108,99,255,0.6),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--base);
+  pointer-events: none;
+}
+
+.mess-card:hover::before {
+  opacity: 1;
+}
+
+/* Image hover zoom (if image exists) */
+.mess-card img {
+  width: 100%;
+  border-radius: var(--r-md);
+  transition: transform var(--base);
+}
+
+.mess-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Menu preview */
+.menu-preview {
+  background: #f8fafc;
+  border-radius: var(--r-sm);
+  padding: 12px;
+  font-size: .9rem;
+  margin: 12px 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* Urgency indicator */
+.time-remaining {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.time-remaining.urgent {
+  color: var(--danger);
+  font-weight: 600;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: .5; }
+  100% { opacity: 1; }
+}
+
+/* CTA */
+.view-details-btn {
+  width: 100%;
+  margin-top: 14px;
+}
+
+/* Skeleton loader (future-ready) */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 37%,
+    #eee 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton 1.4s infinite;
+  border-radius: var(--r-sm);
+}
+
+@keyframes skeleton {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* ---------- TAGS ---------- */
+.ai-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: .75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn,
+.submit-btn,
+.view-details-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all var(--base);
+}
+
+.btn:hover,
+.submit-btn:hover,
+.view-details-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-glow);
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: var(--danger);
+  border-radius: var(--r-sm);
+  padding: 8px 12px;
+  border: none;
+}
+
+/* =================================================
+   PHASE 3 — MENU MODAL
+================================================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 16px;
+
+  /* Prevent background scroll bleed */
+  overflow-y: auto;
+}
+
+/* Modal box */
+.modal-content {
+  background: white;
+  border-radius: var(--r-lg);
+  padding: 24px;
+
+  width: 100%;
+  max-width: 420px; /* better for auth modals */
+  max-height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: var(--sh-lg);
+  animation: modalPop 0.3s var(--ease);
+
+  /* Allow internal scroll if content grows */
+  overflow-y: auto;
+}
+
+/* Entrance animation */
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Close button (if present) */
+.modal-content .close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-content .close:hover {
+  color: #000;
+}
+
+/* Mobile polish */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px;
+    max-width: 100%;
+    border-radius: var(--r-md);
+  }
+}
+
+
+/* Menu image */
+.menu-image {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: var(--r-md);
+  margin: 16px 0;
+}
+
+/* Menu text */
+.menu-text {
+  background: #f8fafc;
+  border-radius: var(--r-sm);
+  padding: 14px;
+  line-height: 1.6;
+}
+
+/* Sticky CTA */
+.contact-actions {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding-top: 12px;
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.contact-actions button {
+  flex: 1;
+}
+
+/* =================================================
+   PHASE 3 — UPLOAD FORM
+================================================= */
+
+.upload-card {
+  background: var(--glass);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  box-shadow: var(--sh-md);
+  animation: fade .4s var(--ease);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+/* Animated file upload */
+.file-upload {
+  border: 2px dashed #d1d5db;
+  border-radius: var(--r-md);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--base);
+}
+
+.file-upload:hover {
+  border-color: var(--primary);
+  background: rgba(108,99,255,0.05);
+}
+
+/* Inputs */
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--r-sm);
+  border: 2px solid #e5e7eb;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Feedback */
+.message {
+  padding: 14px;
+  border-radius: var(--r-sm);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.message.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.message.error {
+  background: #fef2f2;
+  color: #7f1d1d;
+  border: 1px solid #fecaca;
+}
+
+/* ---------- ANIMATIONS ---------- */
+.fade-in {
+  animation: fade .5s var(--ease);
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .header .container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mess-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* =================================================
+   PHASE 4 — MICRO-INTERACTIONS & DELIGHT ✨
+================================================= */
+
+/* ---------- BUTTON RIPPLE + LIFT ---------- */
+.btn,
+.submit-btn,
+.view-details-btn,
+.nav-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple effect */
+.btn::after,
+.submit-btn::after,
+.view-details-btn::after,
+.nav-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.4) 10%,
+    transparent 11%
+  );
+  opacity: 0;
+  transform: scale(0.2);
+  transition: transform 0.6s, opacity 0.8s;
+}
+
+.btn:active::after,
+.submit-btn:active::after,
+.view-details-btn:active::after,
+.nav-btn:active::after {
+  opacity: 1;
+  transform: scale(1);
+  transition: 0s;
+}
+
+/* Lift feedback */
+.btn:hover,
+.submit-btn:hover,
+.view-details-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- EXTRA CARD DEPTH ---------- */
+.mess-card {
+  transition:
+    transform var(--base) var(--ease),
+    box-shadow var(--base) var(--ease);
+}
+
+.mess-card:hover {
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.25);
+}
+
+/* ---------- SMOOTHER FADE-INS ---------- */
+.fade-in {
+  animation: fadeUp 0.6s var(--ease) both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- LOADING SPINNER ---------- */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- EMPTY STATES (PERSONALITY) ---------- */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  animation: fadeUp 0.5s var(--ease);
+}
+
+.no-results i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.no-results h3 {
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+
+.no-results p {
+  font-size: 0.95rem;
+}
+
+/* ---------- ACCESSIBILITY + UX ---------- */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(108,99,255,0.4);
+  outline-offset: 2px;
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* =================================================
+   PHASE 5 — MOBILE FIRST POLISH 📱
+================================================= */
+
+/* ---------- GLOBAL MOBILE READABILITY ---------- */
+@media (max-width: 480px) {
+  body {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+/* ---------- THUMB-FRIENDLY BUTTONS ---------- */
+@media (max-width: 480px) {
+  .btn,
+  .submit-btn,
+  .view-details-btn,
+  .nav-btn {
+    min-height: 44px; /* Apple HIG */
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+}
+
+/* ---------- GRID BEHAVIOR ---------- */
+@media (max-width: 600px) {
+  .mess-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .mess-card {
+    padding: 16px;
+  }
+}
+
+/* ---------- CARD CONTENT READABILITY ---------- */
+@media (max-width: 480px) {
+  .menu-preview {
+    font-size: 0.85rem;
+    max-height: 100px;
+  }
+
+  .time-remaining {
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- MODAL USABILITY ---------- */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 96%;
+    padding: 16px;
+    max-height: 92vh;
+  }
+
+  .menu-image {
+    max-height: 200px;
+  }
+
+  .contact-actions {
+    gap: 8px;
+  }
+
+  .contact-actions button {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+}
+
+/* ---------- UPLOAD FORM MOBILE ---------- */
+@media (max-width: 480px) {
+  .upload-card {
+    padding: 20px;
+  }
+
+  .file-upload {
+    padding: 18px;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 0.95rem;
+  }
+}
+
+/* ---------- TABLET POLISH ---------- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .mess-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-content {
+    max-width: 700px;
+  }
+}
+
+/* ---------- DESKTOP WIDESCREEN ---------- */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1280px;
+  }
+
+  .mess-grid {
+    gap: 32px;
+  }
+}
+
+/* ---------- SAFE TOUCH TARGETS ---------- */
+@media (pointer: coarse) {
+  button {
+    min-height: 44px;
+  }
+}
