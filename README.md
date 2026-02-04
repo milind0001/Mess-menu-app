@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Pune Mess Menu App
 
 A real-time mess menu sharing application for students and mess owners in Pune. Built with Node.js, MongoDB, Cloudinary for image storage, and Socket.IO for real-time updates.
@@ -226,3 +227,6 @@ For support and questions:
 - Auto-expiration system
 - Search and filter functionality
 - Responsive design 
+=======
+# Mess-menu-app
+>>>>>>> 06f8bca330db2731921b76429aee9f9d95205f25
